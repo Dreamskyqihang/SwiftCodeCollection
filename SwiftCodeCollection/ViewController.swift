@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     var songs: [Song]
     override func viewDidLoad() {
         super.viewDidLoad()
-        songs = [.song, .song, .song]
+        songs = [.song, .song]
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

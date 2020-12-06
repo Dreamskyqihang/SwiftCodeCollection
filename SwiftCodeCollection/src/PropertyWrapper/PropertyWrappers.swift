@@ -32,11 +32,7 @@ public struct UserDefaultEncoded<T: Codable> {
     public var wrappedValue: T {
         
         get {
-            var userDefaults: UserDefaults = UserDefaults.standard
-            if let defaultName = defaultsName {
-                userDefaults = UserDefaults(suiteName: defaultName) ?? UserDefaults.standard
-            }
-            guard let jsonString = userDefaults.string(forKey: key) else {
+            guard let jsonString = UserDefaults(suiteName: defaultsName)?.string(forKey: key) else {
                 return defaultValue
             }
             guard let jsonData = jsonString.data(using: .utf8) else {
@@ -53,11 +49,7 @@ public struct UserDefaultEncoded<T: Codable> {
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             guard let jsonData = try? encoder.encode(newValue) else { return }
             let jsonString = String(bytes: jsonData, encoding: .utf8)
-            var userDefaults: UserDefaults = UserDefaults.standard
-            if let defaultName = defaultsName {
-                userDefaults = UserDefaults(suiteName: defaultName) ?? UserDefaults.standard
-            }
-            userDefaults.set(jsonString, forKey: key)
+            UserDefaults(suiteName: defaultsName)?.set(jsonString, forKey: key)
         }
     }
 }
